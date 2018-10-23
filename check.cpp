@@ -6,8 +6,8 @@
 #include <limits.h>
 #define ll long long
 #define POP 100
-#define WEIGHT 60
-#define FEA 20
+#define WEIGHT 3030
+#define FEA 23
 #define TERMINATION 85
 #define TOURNAMENT 20 
 #define CROSSRATIO 10
@@ -22,16 +22,17 @@ using namespace std;
 
 // item structure
 struct item{
-	int w,v;
-}listPop[20];
+	int w,v,q,s;
+}listPop[23];
 
+int genCount = 0;
 // chromosome
 struct chromosomes{
 	vector<int> chromosome;
 	int fitness;	
 	int weight;
 	int gen;
-	chromosomes():chromosome(20,0),fitness(0),weight(0),gen(0){}
+	chromosomes():chromosome(23,0),fitness(0),weight(0),gen(0){}
 };
 
 // roulette structure
@@ -105,14 +106,6 @@ public:
 	// to check state of parent and offspring
 	void display(){
 		for(unordered_map <int,vector<chromosomes> > :: iterator it = mapping.begin(); it!=mapping.end(); ++it){
-			// cout << "key: "<<it->first<<" ";
-			// for(int i = 0; i < it->second.size(); ++i){
-			// 	cout <<" vector: "<<i+1 <<" ";
-			// 	for(int j =0; j < it->second[i].chromosome.size(); ++j){
-			// 		cout<< it->second[i].chromosome[j]<<" ";
-			// 	}
-			// 	cout<<endl;
-			// }
 			cout<<" fitness: "<< it->first<<" quantity: "<<m[it->first]<<endl;
 		}
 	}
@@ -200,56 +193,139 @@ int plotterBest(vector<chromosomes> &c){
 
 // set item value and weight
 void setItem(){ 
-	listPop[0].w = 15; // 1 company dreams/a++/a+
+	
 	listPop[0].v = 500;
-	listPop[1].w = 10; // 2 company a/b
+	listPop[0].w = 300;
+	listPop[0].q = 5;
+	listPop[0].s = 2;
+
 	listPop[1].v = 300;
-	listPop[2].w = 5;	// 3 company c/d
-	listPop[2].v = 200; 
-	listPop[3].w = 2;	// 4 About company
-	listPop[3].v = 100; 
-	listPop[4].w = 10;	 // 5 Company specific prep
-	listPop[4].v = 200;
-	listPop[5].w = 30;  // 6 GFG
-	listPop[5].v = 1000;
-	listPop[6].w = 15; // 7 Codechef
-	listPop[6].v = 400;
-	listPop[7].w = 15; // 8 Codeforces  
-	listPop[7].v = 500; 
-	listPop[8].w = 20; // 9 Topcoder
-	listPop[8].v = 500; 
-	listPop[9].w = 25; // 10 Hackerearth
-	listPop[9].v = 500; 
-	listPop[10].w = 25; // 11 Hackerrank
-	listPop[10].v = 500; 
-	listPop[11].w = 3; // 12 os
-	listPop[11].v = 200; 
-	listPop[12].w = 3; // 13 nw
-	listPop[12].v = 100; 
-	listPop[13].w = 3; // 14 dbms
-	listPop[13].v = 200; 
-	listPop[14].w = 2; // 15 oops
-	listPop[14].v = 150; 
-	listPop[15].w = 2; // 16 c/c++
-	listPop[15].v = 100; 
-	listPop[16].w = 2; // 17 java
-	listPop[16].v= 100;
-	listPop[17].w = 2; // 18 asked
-	listPop[17].v = 200; 
-	listPop[18].w = 4; // 19 current
-	listPop[18].v = 50; 
-	listPop[19].w = 2; // 20 resume
-	listPop[19].v = 300; 
+	listPop[1].w = 280;
+	listPop[1].q = 3;
+	listPop[1].s = 1;
+	
+	listPop[2].v = 700;
+	listPop[2].w = 600;
+	listPop[2].q = 5;
+	listPop[2].s = 3;
+
+	listPop[3].v = 650;
+	listPop[3].w = 400;
+	listPop[3].q = 5;
+	listPop[3].s = 3;
+
+	listPop[4].v = 400;
+	listPop[4].w = 300;
+	listPop[4].q = 5;
+	listPop[4].s = 3;
+
+	listPop[5].v = 900; 
+	listPop[5].w = 500;
+	listPop[5].q = 7;
+	listPop[5].s = 8;
+
+	listPop[6].v = 700; 
+	listPop[6].w = 400;
+	listPop[6].q = 5;
+	listPop[6].s = 8;
+
+
+	listPop[7].v = 650;
+	listPop[7].w = 350;
+	listPop[7].q = 3;
+	listPop[7].s = 8;
+
+
+	listPop[8].v = 300; 
+	listPop[8].w = 300;
+	listPop[8].q = 3;
+	listPop[8].s = 3;
+
+
+	listPop[9].v = 390; 
+	listPop[9].w = 350;
+	listPop[9].q = 4;
+	listPop[9].s = 3;
+
+	listPop[10].v = 450; 
+	listPop[10].w = 380;
+	listPop[10].q = 6;
+	listPop[10].s = 3;
+
+	listPop[11].v = 100;
+	listPop[11].w = 310;
+	listPop[11].q = 2;
+	listPop[11].s = 6;
+
+	listPop[12].v = 180;
+	listPop[12].w = 160;
+	listPop[12].q = 4;
+	listPop[12].s = 6;
+
+	listPop[13].v = 500; 
+	listPop[13].w = 250;
+	listPop[13].q = 5;
+	listPop[13].s = 6;
+
+	listPop[14].v = 100;
+	listPop[14].w = 300;
+	listPop[14].q = 3;
+	listPop[14].s = 1;
+
+	listPop[15].v = 120; 
+	listPop[15].w = 200;
+	listPop[15].q = 3;
+	listPop[15].s = 1;
+
+	listPop[16].v = 50; 
+	listPop[16].w = 20;
+	listPop[16].q = 2;
+	listPop[16].s = 4;
+
+	listPop[17].v = 200;
+	listPop[17].w = 100;
+	listPop[17].q = 4;
+	listPop[17].s = 4;
+
+	listPop[18].v = 400;
+	listPop[18].w = 250;
+	listPop[18].q = 5;
+	listPop[18].s = 4;
+
+	listPop[19].v = 800;
+	listPop[19].w = 400;
+	listPop[19].q = 7;
+	listPop[19].s = 7;
+
+
+	listPop[20].v = 500;
+	listPop[20].w = 200;
+	listPop[20].q = 5;
+	listPop[20].s = 7;
+
+	listPop[21].v = 300; 
+	listPop[21].w = 200;
+	listPop[21].q = 4;
+	listPop[21].s = 4;
+
+	listPop[22].v = 600; 
+	listPop[22].w = 350;
+	listPop[22].q = 6;
+	listPop[22].s = 4;
+	cout <<"hey";
+
 }
 
 // make intial population
 void make_population(vector<chromosomes> &c){  
 	for(int i = 0; i < POP; ++i){
-		int w =  0,v=0;
+		int w =  0,v=0,s=0,q=0;
 		while(w<=WEIGHT){
 			int random = rand()%FEA;
 			if(c[i].chromosome[random]==0){
 				w+= listPop[random].w;
+				q+= listPop[random].q;
+				s+= listPop[random].s;
 				c[i].chromosome[random]=1;
 				v+=listPop[random].v;
 			}
@@ -580,6 +656,7 @@ int main(){
 
 	// declare chromosome 
 	vector<chromosomes> c(POP);
+
 
 	// set item value weight -- later with a db
 	setItem();
