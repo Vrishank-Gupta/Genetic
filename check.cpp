@@ -569,10 +569,10 @@ vector<chromosomes> scmWrapper(vector<chromosomes> &c, int &gen){
 
 	for(int i = 0; i < crossover/2; ++i){
 		//select()
-		pair<chromosomes,chromosomes> parent = selectionRoulette(c);
+		pair<chromosomes,chromosomes> parent = selectionTournament(c);
 		
 		//crossover() 
-		pair<chromosomes,chromosomes> child = crossoverTwoPoint(parent,gen);
+		pair<chromosomes,chromosomes> child = crossoverUniform(parent,gen);
 		
 		//mutate()
 		mutateSingleBit(child);
@@ -707,8 +707,8 @@ int main(){
 		// terminating condition
 
 		// population
-		if(terminatePop(c))
-			break;
+		// if(terminatePop(c))
+		// 	break;
 
 		// generation limit
 		// if(terminateGenLimit(gen))
